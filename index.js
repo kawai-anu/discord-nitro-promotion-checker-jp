@@ -3,7 +3,7 @@ const gradient = require('gradient-string');
 const fs = require('fs').promises;
 const readline = require('readline');
 
-// グラデーションの定義
+
 const rainbowGradient = gradient(['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']);
 const pastelGradient = gradient(['#FF9AA2', '#FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA']);
 const cristalGradient = gradient(['#40E0D0', '#FF8C00', '#FF0080']);
@@ -15,7 +15,7 @@ const viceGradient = gradient(['#5433FF', '#20BDFF', '#A5FECB']);
 const atlasGradient = gradient(['#FEAC5E', '#C779D0', '#4BC0C8']);
 const teenGradient = gradient(['#77A1D3', '#79CBCA', '#E684AE']);
 
-// プログレスバーを描画する関数
+
 function formatProgressMessage(progress, total, message) {
   const width = 30;
   const filledWidth = Math.round(width * progress / total);
@@ -26,7 +26,7 @@ function formatProgressMessage(progress, total, message) {
   return `${message} 進捗: ${filledBar}${emptyBar} ${percentage}% (${progress}/${total})`;
 }
 
-// プロモーションコードをチェックする関数
+
 async function checkPromoCode(code) {
   try {
     const url = `https://discord.com/api/v8/entitlements/gift-codes/${code}`;
@@ -42,32 +42,32 @@ async function checkPromoCode(code) {
   }
 }
 
-// コードを抽出する関数
+
 function extractCode(line) {
   const match = line.match(/[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}/);
   return match ? match[0] : null;
 }
 
-// 指定した秒数待機する関数
+
 function wait(seconds) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 }
 
-// 有効なコードをファイルに追加する関数
+
 async function appendValidCode(code, isRedeemed) {
   const fullCode = `https://discord.com/billing/promotions/${code}`;
   const status = isRedeemed ? '(引き換え済み)' : '';
   await fs.appendFile('success.txt', `${fullCode} ${status}\n`);
 }
 
-// コンソールの最後の行を更新する関数
+
 function updateLastLine(text) {
   readline.cursorTo(process.stdout, 0);
   readline.clearLine(process.stdout, 0);
   process.stdout.write(text);
 }
 
-// メイン処理
+
 async function main() {
   try {
     console.log(rainbowGradient('Discord Promotion Checker'));
@@ -120,7 +120,7 @@ async function main() {
 
       totalChecked++;
       
-      // 進捗バーの更新
+
       const progressMessage = formatProgressMessage(totalChecked, promoLines.length, '進捗状況');
       updateLastLine(atlasGradient(progressMessage));
 
@@ -138,7 +138,7 @@ async function main() {
   }
 }
 
-// メイン関数の実行
+
 main().catch(error => {
   console.error(teenGradient('未キャッチのエラーが発生しました:'));
   console.error(error);
